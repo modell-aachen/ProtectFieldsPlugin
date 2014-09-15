@@ -1,0 +1,81 @@
+%META:TOPICPARENT{name="Plugins"}%
+<!--
+One line description, required for extensions repository catalog.
+   * Set SHORTDESCRIPTION = %$SHORTDESCRIPTION%
+-->
+---+!! ProtectFields Plugin
+
+%SHORTDESCRIPTION%
+
+%TOC%
+
+---++ Description
+
+This plugin is designed to protect certain formfields from changing. You can set rules for specific webs or all webs and fields. When these rules are not met, the save is aborted.
+
+The plugin will usually be used in conjunction with _WorkflowPlugin/KVPPlugin_.
+
+Usually you will also want to render the form accordingly (=CustomSkinDocumentFormTableTemplate=).
+
+---++ Macros
+
+The =CANMODIFYFIELD= macro tells you if the condition set in configure is met for the current topic. It returns =1= or =0=. It's single (=_DEFAULT=) parameter is the field you want the info about.
+
+Eg.: =%CANMODIFYFIELD{"PageOwner"}%= will return =1= if you can modify the field and =0= otherwise.
+
+---++ Preferences
+
+The protected fields and their conditions must be set in configure.
+
+You can set rules for all webs and for single webs only. Subwebs do *not* inherit.
+
+---+++ All webs
+
+Set ={Plugins}{ProtectFieldsPlugin}{ProtectedFieldsAllWebs}= to a perl hash in the format =&lt;fieldname&gt; =&gt; &lt;TML that returns perl false/true&gt;= eg.
+<pre>
+{
+  'PageOwner' => '%<nop>IF{"some condition" then="1" else="0"}%'
+}
+</pre>
+
+---+++ Single webs
+
+You can also set rules for each web individually (subwebs do *not* inherit). Set ={Plugins}{ProtectFieldsPlugin}{ProtectedFields}= to a perl hash in the format =&lt;web&gt; =&gt; { &lt;fieldname&gt; =&gt; &lt;TML that returns perl false/true&gt; }= eg.
+<pre>
+{
+  'Processes' => {
+    'PageOwner' => '%<nop>IF{"some condition" then="1" else="0"}%'
+  }
+}
+</pre>
+
+---++ Example
+If you define a =Allow PageOwner= column in _KVPPlugin_ the ={Plugins}{ProtectFieldsPlugin}{ProtectedFields}= condition could look like this:
+<pre>
+{
+  'PageOwner' => '%<nop>WORKFLOWALLOWS{"allowpageowner" uncontrolled="1"}%'
+}
+</pre>
+and you can define via the workflow who can change the pageowner (and when). You should not provide an edit field for users that are not allowed to change the value. Thus you should create a =CustomSkinDocumentFormTableTemplate= (provided you use ModacSkin) like this:
+<pre>
+%TMPL:INCLUDE{"DocumentFormTableTemplate"}%
+
+%TMPL:DEF{"modacformtable:extraparams"}%%TMPL:PREV%
+%<nop>IF{"not $'CANMODIFYFIELD{PageOwner}'" then="PageOwner_format=\"&lt;tr class='modacForm'&gt;&lt;td&gt;&lt;span class='title'&gt;$title&lt;/span&gt;$mandatory&lt;/td&gt;&lt;td&gt;$value&lt;/td&gt;&lt;/tr&gt;\""}%%TMPL:END%
+</pre>
+
+---++ Installation
+%$INSTALL_INSTRUCTIONS%
+
+---++ Info
+
+|  Author: | Modell Aachen GmbH |
+|  Copyright: | 2014, Modell Aachen GmbH, All Rights Reserved |
+|  License: | GPL ([[http://www.gnu.org/copyleft/gpl.html][GNU General Public License]]) |
+|  Dependencies: | Foswiki 1.1.9 |
+|  Version: | %$VERSION% |
+|  Release: | %$RELEASE% |
+|  Change&nbsp;History: | &nbsp; |
+|  1.0.0 (%$CREATEDATE%): | Initial version |
+|  Home: | http://foswiki.org/Extensions/%TOPIC% |
+|  Support: | http://foswiki.org/Support/%TOPIC% |

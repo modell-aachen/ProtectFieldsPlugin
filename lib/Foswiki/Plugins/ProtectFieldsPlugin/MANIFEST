@@ -1,0 +1,6 @@
+!noci
+data/System/ProtectFieldsPlugin.txt 0644 Documentation page
+data/System/VarCANMODIFYFIELD.txt 0644 Documentation page
+lib/Foswiki/Plugins/ProtectFieldsPlugin.pm 0444 Perl module
+lib/Foswiki/Plugins/ProtectFieldsPlugin/Config.spec 0444 Configuration
+locale/ProtectFieldsPlugin/de.po 0644
