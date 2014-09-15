@@ -1,0 +1,32 @@
+%META:TOPICPARENT{name="Plugins"}%
+<!--
+One line description, required for extensions repository catalog.
+   * Set SHORTDESCRIPTION = %$SHORTDESCRIPTION%
+-->
+---+!! ProtectFields Plugin
+
+%SHORTDESCRIPTION%
+
+%TOC%
+
+---++ Preferences
+
+The protected fields and their conditions must be set in configure.
+
+You can set rules for all webs and for single webs only. Subwebs do not inherit.
+
+---++ Installation
+%$INSTALL_INSTRUCTIONS%
+
+---++ Info
+
+|  Author: | Modell Aachen GmbH |
+|  Copyright: | 2014, Modell Aachen GmbH, All Rights Reserved |
+|  License: | GPL ([[http://www.gnu.org/copyleft/gpl.html][GNU General Public License]]) |
+|  Dependencies: | Foswiki 1.1.9 |
+|  Version: | %$VERSION% |
+|  Release: | %$RELEASE% |
+|  Change&nbsp;History: | &nbsp; |
+|  1.0.0 (%$CREATEDATE%): | Initial version |
+|  Home: | http://foswiki.org/Extensions/%TOPIC% |
+|  Support: | http://foswiki.org/Support/%TOPIC% |
