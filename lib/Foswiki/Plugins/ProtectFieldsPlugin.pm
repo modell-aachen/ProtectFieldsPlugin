@@ -66,7 +66,7 @@ sub checkFields {
 
     my $errors;
 
-    foreach my $field (keys $fields) {
+    foreach my $field (keys %$fields) {
         my $oldHash = $oldMeta->get('FIELD', $field);
         my $oldValue = ($oldHash)?$oldHash->{value}:'';
         my $newHash = $meta->get('FIELD', $field);
