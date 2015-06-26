@@ -77,7 +77,9 @@ sub checkFields {
         next if $allowed;
 
         $oldValue =~ s#"#\\"#g;
+        $oldValue =~ s#,#;#g; # XXX cannot use ',' because it is used as a separator to args="..." cannot use '&#44;' because it will be passed verbatim
         $newValue =~ s#"#\\"#g;
+        $newValue =~ s#,#;#g;
         $errors ||= ();
         push(@$errors, '%MAKETEXT{"You are not allowed to change formfield [_1] from \"[_2]\" to \"[_3]\"." args="'."$field,$oldValue,$newValue\"}%");
     }
