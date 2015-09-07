@@ -74,9 +74,7 @@ sub beforeSaveHandler {
     push (@errors, @$errorsAllWebs) if $errorsAllWebs;
     push (@errors, @$errorsThisWeb) if $errorsThisWeb;
 
-    use Data::Dumper;Foswiki::Func::writeWarning(Dumper(@errors));
     @errors = map { Foswiki::Func::expandCommonVariables($_) } @errors;
-    use Data::Dumper;Foswiki::Func::writeWarning(Dumper(@errors));
     throw Foswiki::OopsException(
         'oopsgeneric',
         web   => $_[2],
