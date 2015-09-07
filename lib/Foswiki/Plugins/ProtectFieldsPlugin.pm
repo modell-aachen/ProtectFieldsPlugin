@@ -43,13 +43,9 @@ sub _CANMODIFYFIELD {
     $thisWeb = $thisWeb->{$web} if $thisWeb;
 
     if($allWebs && defined $allWebs->{$field}) {
-        Foswiki::Func::writeWarning( $allWebs->{$field});
-        Foswiki::Func::writeWarning( Foswiki::Func::expandCommonVariables($allWebs->{$field}, $topic, $web));
         return '0' unless Foswiki::Func::expandCommonVariables($allWebs->{$field}, $topic, $web);
     }
     if($thisWeb && defined $thisWeb->{$field}) {
-        Foswiki::Func::writeWarning( $thisWeb->{$field});
-        Foswiki::Func::writeWarning( Foswiki::Func::expandCommonVariables($thisWeb->{$field}, $topic, $web));
         return '0' unless Foswiki::Func::expandCommonVariables($thisWeb->{$field}, $topic, $web);
     }
     return '1';
