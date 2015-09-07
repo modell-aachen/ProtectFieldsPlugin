@@ -25,8 +25,34 @@ sub initPlugin {
         return 0;
     }
 
+    Foswiki::Func::registerTagHandler(
+        'CANMODIFYFIELD', \&_CANMODIFYFIELD );
+
     # Plugin correctly initialized
     return 1;
+}
+
+sub _CANMODIFYFIELD {
+    my ( $session, $attributes, $topic, $web ) = @_;
+
+    my $field = $attributes->{_DEFAULT};
+    return unless defined $field;
+
+    my $allWebs = $Foswiki::cfg{Plugins}{ProtectFieldsPlugin}{ProtectedFieldsAllWebs};
+    my $thisWeb = $Foswiki::cfg{Plugins}{ProtectFieldsPlugin}{ProtectedFields};
+    $thisWeb = $thisWeb->{$web} if $thisWeb;
+
+    if($allWebs && defined $allWebs->{$field}) {
+        Foswiki::Func::writeWarning( $allWebs->{$field});
+        Foswiki::Func::writeWarning( Foswiki::Func::expandCommonVariables($allWebs->{$field}, $topic, $web));
+        return '0' unless Foswiki::Func::expandCommonVariables($allWebs->{$field}, $topic, $web);
+    }
+    if($thisWeb && defined $thisWeb->{$field}) {
+        Foswiki::Func::writeWarning( $thisWeb->{$field});
+        Foswiki::Func::writeWarning( Foswiki::Func::expandCommonVariables($thisWeb->{$field}, $topic, $web));
+        return '0' unless Foswiki::Func::expandCommonVariables($thisWeb->{$field}, $topic, $web);
+    }
+    return '1';
 }
 
 sub beforeSaveHandler {

@@ -9,11 +9,16 @@ One line description, required for extensions repository catalog.
 
 %TOC%
 
+---++ Macros
+
+The =CANMODIFYFIELD= macro tells you if the condition set in configure is met for the current topic. It returns =1= or =0=. It's single (=_DEFAULT=) parameter is the field you want the info about.
+
+Eg.: =%CANMODIFYFIELD{"PageOwner"}%= will return =1= if you can modify the field and =0= otherwise.
+
 ---++ Preferences
 
 The protected fields and their conditions must be set in configure.
 
-You can set rules for all webs and for single webs only. Subwebs do not inherit.
 
 ---++ Installation
 %$INSTALL_INSTRUCTIONS%
